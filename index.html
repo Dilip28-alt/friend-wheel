@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hey 👀</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fbd3e9, #bbd2c5);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .card {
+      background: white;
+      padding: 35px 30px;
+      border-radius: 22px;
+      text-align: center;
+      width: 330px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 17px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 28px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      background: #ff5c8a;
+      color: white;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Wheel styles */
+    .wheel-wrapper {
+      margin: 20px auto;
+      width: 250px;
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 18px solid #333;
+      margin: 0 auto 8px;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 250px;
+      height: 250px;
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 8px solid #333;
+      background: conic-gradient(
+        #ffadad 0deg 60deg,
+        #ffd6a5 60deg 120deg,
+        #fdffb6 120deg 180deg,
+        #caffbf 180deg 240deg,
+        #9bf6ff 240deg 300deg,
+        #bdb2ff 300deg 360deg
+      );
+      transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    }
+
+    .label {
+      position: absolute;
+      width: 50%;
+      left: 50%;
+      top: 50%;
+      transform-origin: 0% 0%;
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCREEN 1 -->
+<div class="card" id="screen1">
+  <h1>If you’re reading this 👀</h1>
+  <p>
+    If you opened this link,<br>
+    you officially made my day.
+  </p>
+  <button onclick="nextScreen()">Next →</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="card hidden" id="screen2">
+  <h1>🎡 Spin the Wheel</h1>
+  <p>Let fate decide 😄</p>
+
+  <div class="wheel-wrapper">
+    <div class="arrow"></div>
+
+    <div class="wheel-container">
+      <div class="wheel" id="wheel"></div>
+
+      <div class="label" style="transform: rotate(30deg) translate(60px,-8px);">😤 Hate me</div>
+      <div class="label" style="transform: rotate(90deg) translate(60px,-8px);">🥹 Miss me</div>
+      <div class="label" style="transform: rotate(150deg) translate(60px,-8px);">😎 Respect</div>
+      <div class="label" style="transform: rotate(210deg) translate(60px,-8px);">☕ Coffee</div>
+      <div class="label" style="transform: rotate(270deg) translate(60px,-8px);">🤜🤛 Bro</div>
+      <div class="label" style="transform: rotate(330deg) translate(60px,-8px);">🥰 Friend</div>
+    </div>
+  </div>
+
+  <button onclick="spin()">SPIN 🎯</button>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  let currentRotation = 0;
+
+  function nextScreen() {
+    document.getElementById("screen1").classList.add("hidden");
+    document.getElementById("screen2").classList.remove("hidden");
+  }
+
+  function spin() {
+    const options = [
+      "😤 You hate me",
+      "🥹 You’re missing me",
+      "😎 Respect",
+      "☕ Coffee",
+      "🤜🤛 Brother",
+      "🥰 Friend"
+    ];
+
+    const slice = 360 / options.length;
+    const randomIndex = Math.floor(Math.random() * options.length);
+    const rotation = 360 * 5 + randomIndex * slice + slice / 2;
+
+    currentRotation += rotation;
+    document.getElementById("wheel").style.transform =
+      `rotate(${currentRotation}deg)`;
+
+    setTimeout(() => {
+      document.getElementById("result").textContent =
+        options[randomIndex];
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
